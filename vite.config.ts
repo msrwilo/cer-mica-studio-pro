@@ -11,6 +11,3 @@ export default defineConfig({
   base: "/cer-mica-studio-pro/",   // 👈 nombre de tu repo
   plugins: [react()],
 })
-
-
-export default defineConfig();

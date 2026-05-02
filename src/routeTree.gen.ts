@@ -9,38 +9,137 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedQuemasRouteImport } from './routes/_authenticated/quemas'
+import { Route as AuthenticatedProductosRouteImport } from './routes/_authenticated/productos'
+import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
+import { Route as AuthenticatedHornosRouteImport } from './routes/_authenticated/hornos'
+import { Route as AuthenticatedQuemasIdRouteImport } from './routes/_authenticated/quemas.$id'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedQuemasRoute = AuthenticatedQuemasRouteImport.update({
+  id: '/quemas',
+  path: '/quemas',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedProductosRoute = AuthenticatedProductosRouteImport.update({
+  id: '/productos',
+  path: '/productos',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPanelRoute = AuthenticatedPanelRouteImport.update({
+  id: '/panel',
+  path: '/panel',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedHornosRoute = AuthenticatedHornosRouteImport.update({
+  id: '/hornos',
+  path: '/hornos',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedQuemasIdRoute = AuthenticatedQuemasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AuthenticatedQuemasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/hornos': typeof AuthenticatedHornosRoute
+  '/panel': typeof AuthenticatedPanelRoute
+  '/productos': typeof AuthenticatedProductosRoute
+  '/quemas': typeof AuthenticatedQuemasRouteWithChildren
+  '/quemas/$id': typeof AuthenticatedQuemasIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/hornos': typeof AuthenticatedHornosRoute
+  '/panel': typeof AuthenticatedPanelRoute
+  '/productos': typeof AuthenticatedProductosRoute
+  '/quemas': typeof AuthenticatedQuemasRouteWithChildren
+  '/quemas/$id': typeof AuthenticatedQuemasIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authenticated/hornos': typeof AuthenticatedHornosRoute
+  '/_authenticated/panel': typeof AuthenticatedPanelRoute
+  '/_authenticated/productos': typeof AuthenticatedProductosRoute
+  '/_authenticated/quemas': typeof AuthenticatedQuemasRouteWithChildren
+  '/_authenticated/quemas/$id': typeof AuthenticatedQuemasIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/hornos'
+    | '/panel'
+    | '/productos'
+    | '/quemas'
+    | '/quemas/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/hornos'
+    | '/panel'
+    | '/productos'
+    | '/quemas'
+    | '/quemas/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/hornos'
+    | '/_authenticated/panel'
+    | '/_authenticated/productos'
+    | '/_authenticated/quemas'
+    | '/_authenticated/quemas/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +147,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/quemas': {
+      id: '/_authenticated/quemas'
+      path: '/quemas'
+      fullPath: '/quemas'
+      preLoaderRoute: typeof AuthenticatedQuemasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/productos': {
+      id: '/_authenticated/productos'
+      path: '/productos'
+      fullPath: '/productos'
+      preLoaderRoute: typeof AuthenticatedProductosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/panel': {
+      id: '/_authenticated/panel'
+      path: '/panel'
+      fullPath: '/panel'
+      preLoaderRoute: typeof AuthenticatedPanelRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/hornos': {
+      id: '/_authenticated/hornos'
+      path: '/hornos'
+      fullPath: '/hornos'
+      preLoaderRoute: typeof AuthenticatedHornosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/quemas/$id': {
+      id: '/_authenticated/quemas/$id'
+      path: '/$id'
+      fullPath: '/quemas/$id'
+      preLoaderRoute: typeof AuthenticatedQuemasIdRouteImport
+      parentRoute: typeof AuthenticatedQuemasRoute
+    }
   }
 }
 
+interface AuthenticatedQuemasRouteChildren {
+  AuthenticatedQuemasIdRoute: typeof AuthenticatedQuemasIdRoute
+}
+
+const AuthenticatedQuemasRouteChildren: AuthenticatedQuemasRouteChildren = {
+  AuthenticatedQuemasIdRoute: AuthenticatedQuemasIdRoute,
+}
+
+const AuthenticatedQuemasRouteWithChildren =
+  AuthenticatedQuemasRoute._addFileChildren(AuthenticatedQuemasRouteChildren)
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedHornosRoute: typeof AuthenticatedHornosRoute
+  AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
+  AuthenticatedProductosRoute: typeof AuthenticatedProductosRoute
+  AuthenticatedQuemasRoute: typeof AuthenticatedQuemasRouteWithChildren
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedHornosRoute: AuthenticatedHornosRoute,
+  AuthenticatedPanelRoute: AuthenticatedPanelRoute,
+  AuthenticatedProductosRoute: AuthenticatedProductosRoute,
+  AuthenticatedQuemasRoute: AuthenticatedQuemasRouteWithChildren,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

@@ -8,7 +8,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: "/cer-mica-studio-pro/",   // 👈 nombre exacto de tu repo
+  base: "/cer-mica-studio-pro/",   // 👈 nombre de tu repo
   plugins: [react()],
 })
 

@@ -1,0 +1,22 @@
+
+ALTER FUNCTION public.set_updated_at() SET search_path = public;
+ALTER FUNCTION public.set_usuarios_id() SET search_path = public;
+ALTER FUNCTION public.set_proveedor_id() SET search_path = public;
+ALTER FUNCTION public.set_cliente_id() SET search_path = public;
+ALTER FUNCTION public.set_producto_id() SET search_path = public;
+ALTER FUNCTION public.set_formula_id() SET search_path = public;
+ALTER FUNCTION public.set_oc_id() SET search_path = public;
+ALTER FUNCTION public.set_dc_id() SET search_path = public;
+ALTER FUNCTION public.set_horno_id() SET search_path = public;
+ALTER FUNCTION public.set_prod_id() SET search_path = public;
+ALTER FUNCTION public.set_pcli_id() SET search_path = public;
+ALTER FUNCTION public.set_quema_id() SET search_path = public;
+ALTER FUNCTION public.set_bq_id() SET search_path = public;
+ALTER FUNCTION public.set_qdp_id() SET search_path = public;
+ALTER FUNCTION public.set_venta_id() SET search_path = public;
+ALTER FUNCTION public.set_tx_id() SET search_path = public;
+ALTER FUNCTION public.formulas_before_iu() SET search_path = public;
+ALTER FUNCTION public.productos_before_u() SET search_path = public;
+ALTER FUNCTION public.quemas_before_iu() SET search_path = public;
+ALTER FUNCTION public.qdp_before_iu() SET search_path = public;
+ALTER FUNCTION public.tipo_de_quema_from_temp(NUMERIC) SET search_path = public;
